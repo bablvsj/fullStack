@@ -6,14 +6,8 @@
 
 <style scoped>
 
-*{
-  padding: 0;
-  margin: 0;
-}
 
-#app{
-  padding: 0 !important;
-}
+
 
 .logo {
   height: 6em;
