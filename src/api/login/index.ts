@@ -1,4 +1,4 @@
-import { request } from "@/utils/request";
+import request from "@/api/request";
 
 export function getImageCaptcha(params?: API.CaptchaParams) {
   return request<API.CaptchaResult>({
