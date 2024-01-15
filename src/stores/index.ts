@@ -4,8 +4,7 @@ import { DEFAULT_PRIMARY } from "@/config/config";
 import piniaPersistConfig from "@/config/piniaPersist";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
-export const GlobalStore = defineStore({
-  id: "GlobalState",
+export const GlobalStore = defineStore('GlobalState',{
   state: (): GlobalState => ({
     token: "",
     userInfo: "",

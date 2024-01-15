@@ -25,7 +25,7 @@ class Request {
     this.service = axios.create(config); // 实例化axios
 
     this.service.interceptors.request.use(
-      (config: AxiosRequestConfig) => {
+      (config:any) => {
         const globalStore = GlobalStore();
         // 如果当前请求不需要显示loading，在api服务中通过指定第三个参数：{headers:{"noLoading:true"}} 来控制不显示loading，参见loginApi
         config.headers!.noLoading || showLoading();

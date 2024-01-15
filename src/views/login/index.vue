@@ -4,14 +4,15 @@
       <div class="login-logo">
         <!-- <svg-icon name="logo" :size="45" /> -->
         <img src="@/assets/images/logo.jpg" width="45" />
-        <h1 class="mb-0 ml-2 text-3xl font-bold">Vue3 Antd Ts Vite</h1>
+        <p class="mb-0 ml-2 text-3xl font-bold">Vue3 Antd Ts Vite</p>
       </div>
       <a-form
+        ref="loginForm"
         layout="horizontal"
         :model="state.formInline"
-        @submit.prevent="handleSubmit"
+        :rules="rules"
       >
-        <a-form-item>
+        <a-form-item name="username">
           <a-input
             v-model:value="state.formInline.username"
             size="large"
@@ -20,7 +21,7 @@
             <template #prefix><user-outlined type="user" /></template>
           </a-input>
         </a-form-item>
-        <a-form-item>
+        <a-form-item name="password">
           <a-input
             v-model:value="state.formInline.password"
             size="large"
@@ -31,7 +32,7 @@
             <template #prefix><lock-outlined type="user" /></template>
           </a-input>
         </a-form-item>
-        <a-form-item>
+        <a-form-item name="verifyCode">
           <a-input
             v-model:value="state.formInline.verifyCode"
             placeholder="验证码"
@@ -51,9 +52,9 @@
         <a-form-item>
           <a-button
             type="primary"
-            html-type="submit"
             size="large"
             :loading="state.loading"
+            @click="handleSubmit"
             block
           >
             登录
@@ -73,9 +74,12 @@ import {
 } from "@ant-design/icons-vue";
 import { useRoute, useRouter } from "vue-router";
 import { message, Modal } from "ant-design-vue";
-// import { useUserStore } from '@/store/modules/user';
-import { getImageCaptcha } from '@/api/login';
+import { userStore } from "@/store/modules/user";
+import { getImageCaptcha } from "@/api/login";
+import type { Rule } from "ant-design-vue/es/form";
 // import { to } from '@/utils/awaitTo';
+
+const loginForm = ref();
 
 const state = reactive({
   loading: false,
@@ -91,7 +95,41 @@ const state = reactive({
 const route = useRoute();
 const router = useRouter();
 
-// const userStore = useUserStore();
+const rules = {
+  username: [
+    {
+      required: true,
+      message: "请输入账号",
+      trigger: "change",
+      type: "string",
+    },
+  ],
+  password: [
+    {
+      required: true,
+      message: "请输入密码",
+      trigger: "change",
+      type: "string",
+    },
+  ],
+  verifyCode: [
+    {
+      required: false,
+      message: "请输入密码",
+      trigger: "change",
+      type: "string",
+    },
+  ],
+  captchaId: [
+    {
+      required: false,
+      message: "请输入密码",
+      trigger: "change",
+      type: "string",
+    },
+  ],
+};
+const userStore = useUserStore();
 
 const setCaptcha = async () => {
   const { id, img } = await getImageCaptcha({ width: 100, height: 50 });
@@ -100,32 +138,32 @@ const setCaptcha = async () => {
 };
 // setCaptcha();
 
-const handleSubmit = async () => {
-  const { username, password, verifyCode } = state.formInline;
-  if (username.trim() == "" || password.trim() == "") {
-    return message.warning("用户名或密码不能为空！");
-  }
-  if (!verifyCode) {
-    return message.warning("请输入验证码！");
-  }
-  message.loading("登录中...", 0);
-  state.loading = true;
-  console.log(state.formInline);
-  // params.password = md5(password)
-
-  const [err] = await to(userStore.login(state.formInline));
-  if (err) {
-    Modal.error({
-      title: () => "提示",
-      content: () => err.message,
-    });
-    setCaptcha();
-  } else {
-    message.success("登录成功！");
-    setTimeout(() => router.replace((route.query.redirect as string) ?? "/"));
-  }
-  state.loading = false;
-  message.destroy();
+const handleSubmit = () => {
+  loginForm.value
+    .validate()
+    .then(() => {
+      // console.log('通过', res)
+      message.loading("登录中...", 0);
+      state.loading = true;
+      userStore.login(state.formInline).console.log(state.formInline);
+      // params.password = md5(password)
+      // const [err] = await to();
+      if (err) {
+        Modal.error({
+          title: () => "提示",
+          content: () => err.message,
+        });
+        setCaptcha();
+      } else {
+        message.success("登录成功！");
+        setTimeout(() =>
+          router.replace((route.query.redirect as string) ?? "/")
+        );
+      }
+      state.loading = false;
+      message.destroy();
+    })
+    .catch(() => {});
 };
 </script>
 
@@ -136,25 +174,26 @@ const handleSubmit = async () => {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: url("@/assets/images/bg.png");
+  // background: url("@/assets/images/bg.png");
+  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
   background-size: cover;
   overflow: hidden;
   box-sizing: border-box;
   // filter: blur(2px);
   z-index: 1;
 
-  &:after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    /* 从父元素继承 background 属性的设置 */
-    background: inherit;
-    filter: blur(2px);
-    z-index: 2;
-  }
+  // &:after {
+  //   content: "";
+  //   width: 100%;
+  //   height: 100%;
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   /* 从父元素继承 background 属性的设置 */
+  //   background: inherit;
+  //   filter: blur(2px);
+  //   z-index: 2;
+  // }
 
   .login-content {
     padding-top: 50px;
@@ -162,7 +201,6 @@ const handleSubmit = async () => {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
     height: 500px;
     text-align: center;
     z-index: 3;
@@ -171,10 +209,21 @@ const handleSubmit = async () => {
   .login-logo {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: 30px;
 
     .svg-icon {
       font-size: 48px;
+    }
+
+    img {
+      border-radius: 50%;
+    }
+
+    p {
+      font-size: 24px;
+      margin: 0 10px;
+      color: aliceblue;
     }
   }
 
