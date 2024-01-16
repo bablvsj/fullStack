@@ -74,8 +74,8 @@ import {
 } from "@ant-design/icons-vue";
 import { useRoute, useRouter } from "vue-router";
 import { message, Modal } from "ant-design-vue";
-import { userStore } from "@/store/modules/user";
-import { getImageCaptcha } from "@/api/login";
+import { UserStore } from "@/store/modules/user";
+// import { getImageCaptcha } from "@/api/login";
 import type { Rule } from "ant-design-vue/es/form";
 // import { to } from '@/utils/awaitTo';
 
@@ -85,8 +85,8 @@ const state = reactive({
   loading: false,
   captcha: "",
   formInline: {
-    username: "",
-    password: "",
+    username: "1111111",
+    password: "2222222",
     verifyCode: "",
     captchaId: "",
   },
@@ -129,12 +129,12 @@ const rules = {
     },
   ],
 };
-const userStore = useUserStore();
+const userStore = UserStore();
 
 const setCaptcha = async () => {
-  const { id, img } = await getImageCaptcha({ width: 100, height: 50 });
-  state.captcha = img;
-  state.formInline.captchaId = id;
+  // const { id, img } = await getImageCaptcha({ width: 100, height: 50 });
+  // state.captcha = img;
+  // state.formInline.captchaId = id;
 };
 // setCaptcha();
 

@@ -1,10 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from "./routes"
+import router from "@/router"
 import Antd from "ant-design-vue"
 import "ant-design-vue/dist/reset.css"
 import './style.css'
-import pinia from '@/stores'
+import pinia from '@/store'
+
+// Mock 数据引入
+import Mock from "./mock";
+Mock();
 
 
 const app = createApp(App)

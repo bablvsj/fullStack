@@ -3,14 +3,23 @@
 // import { DEFAULT_PRIMARY } from "@/config/config";
 // import piniaPersistConfig from "@/config/piniaPersist";
 // import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import { loginApi } from "@/api/modules/login";
+import { Login } from "@/api/interface";
 
-import { createPinia, defineStore } from "pinia";
+import { defineStore } from "pinia";
 
-export const userStore = defineStore("userStore", {
+export const UserStore = defineStore("UserStore", {
   state: () => ({
     username: "",
     userId: "",
   }),
+  actions: {
+    login(params: Login.ReqLoginForm) {
+      loginApi(params).then((res) => {
+        console.log(res);
+      });
+    },
+  },
 });
 
 // export const GlobalStore = defineStore({
