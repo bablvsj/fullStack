@@ -4,18 +4,14 @@ import axios, {
   AxiosRequestConfig,
   AxiosInstance,
 } from "axios";
-// import { fullScreenLoading } from "@/config/serviceLoading";
-// import { showLoading, hideLoading } from "@/config/serviceLoading";
 import { ResultEnum } from "@/enums/requestEnum";
 import { GlobalStore } from "@/store";
 import { LoadingStore } from "@/store/modules/loading";
 import { ResultData } from "@/api/interface";
-import { message, Spin } from "ant-design-vue";
+import { message } from "ant-design-vue";
 import router from "@/router";
 import { LOGIN_URL } from "@/config/config";
 import { checkStatus } from "./helper/checkStatus";
-
-import { h, render } from "vue";
 
 const config = {
   baseURL: import.meta.env.VITE_API_URL,
@@ -23,36 +19,6 @@ const config = {
   // 跨域时允许携带凭证
   withCredentials: true,
 };
-
-let needLoadingRequestCount = 0;
-
-const renderDom = () => {
-  return Spin;
-};
-
-function showFullScreenLoading() {
-  //添加loading
-  if (needLoadingRequestCount === 0) {
-    // store.dispatch(OpenPageLoading())
-    var dom = document.createElement("div");
-    dom.setAttribute("id", "loading");
-    document.body.appendChild(dom);
-
-    const iconCopy = h(renderDom);
-
-    render(iconCopy, dom);
-  }
-  needLoadingRequestCount++;
-}
-
-function tryHideFullScreenLoading() {
-  //删除loading
-  needLoadingRequestCount--;
-  if (needLoadingRequestCount === 0) {
-    // store.dispatch(ClosePageLoading())
-    document.body.removeChild(document.getElementById("loading"));
-  }
-}
 
 class Request {
   service: AxiosInstance;
@@ -63,7 +29,7 @@ class Request {
       (config: any) => {
         console.log(config);
         const globalStore = GlobalStore();
-        // 如果当前请求不需要显示loading，在api服务中通过指定第三个参数：{headers:{"noLoading:true"}} 来控制不显示loading，参见loginApi
+        // 如果当前请求不需要显示loading，在api服务中通过指定第三个参数：{headers:{"loading:true"}} 来控制显示loading，参见loginApi
         config.headers?.loading && LoadingStore().show();
         const token: string = globalStore.token;
         return {
@@ -96,7 +62,7 @@ class Request {
           return Promise.reject(data);
         }
 
-        return data;
+        return data.data;
       },
       async (error: AxiosError) => {
         const { response } = error;
@@ -116,7 +82,7 @@ class Request {
     return this.service.get(url, { params, ..._object });
   }
 
-  post<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+  post<T>(url: string, params?: object, _object = {}): Promise<T> {
     return this.service.post(url, params, _object);
   }
 

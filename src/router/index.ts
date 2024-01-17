@@ -1,46 +1,57 @@
 import { createRouter, createWebHistory } from "vue-router";
-import {LOGIN_URL,ROUTER_WHITE_LIST } from "@/config/config"
-import NProgress from "@/config/nprogress"
+import { LOGIN_URL, ROUTER_WHITE_LIST } from "@/config/config";
+import NProgress from "@/config/nprogress";
+import { GlobalStore } from "@/store";
 
-let routes = [{
+let commonRoutes = [
+  {
     path: "/home",
     name: "Home",
-    component: () => import("@/views/home.vue")
-},
-{
+    component: () => import("@/views/home.vue"),
+  },
+  {
     path: "/login",
     name: "Login",
-    component: () => import("@/views/login/index.vue")
-}]
+    component: () => import("@/views/login/index.vue"),
+  },
+];
+
+let dynamicRoutes = [
+  {
+    path: "/",
+    name: "Home",
+    component: () => import("@/layout/index.vue"),
+  },
+];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
-
+  history: createWebHistory(),
+  routes: [...commonRoutes, ...dynamicRoutes],
+});
 
 // 路由拦截
 
-router.beforeEach((to,from,next)=>{
-    NProgress.start();
+router.beforeEach((to, from, next) => {
+  NProgress.start();
 
-    let token = localStorage.getItem("b-token")
+  const globalStore = GlobalStore();
 
-    if (to.path === LOGIN_URL) {
-		// if (globalStore.token) return next(from.fullPath);
-		// resetRouter();
-		return next();
-	}
+  if (to.path === LOGIN_URL) {
+    // if (globalStore.token) return next(from.fullPath);
+    // resetRouter();
+    return next();
+  }
 
-    if(!token){
-        next({path:LOGIN_URL,replace:true})
-        return;
-    }
-})
+  if (!globalStore.token) {
+    next({ path: LOGIN_URL, replace: true });
+    return;
+  }
 
-router.afterEach((to,from,next)=>{
-    NProgress.done()
-})
+  next();
+});
+
+router.afterEach((to, from, next) => {
+  NProgress.done();
+});
 
 export default router;
-

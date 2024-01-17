@@ -7,8 +7,10 @@ export default () => {
     return {
       msg: "操作成功",
       code: 200,
-      token:
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6Ijc3NWY0NTFiLTIwZjQtNDdmOS1hOTVhLWI0MzY1NmM2MjYxYyJ9.GtTeGti5GkRi_SHkGXvR8-56ruuamYyE3sZgHUf5Ci5AjiYJrGE7Rh-3kuUkXi7aE6_P_PXAo-oleykoaPoRUQ",
+      data: {
+        token:
+          "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6Ijc3NWY0NTFiLTIwZjQtNDdmOS1hOTVhLWI0MzY1NmM2MjYxYyJ9.GtTeGti5GkRi_SHkGXvR8-56ruuamYyE3sZgHUf5Ci5AjiYJrGE7Rh-3kuUkXi7aE6_P_PXAo-oleykoaPoRUQ",
+      },
     };
   });
 

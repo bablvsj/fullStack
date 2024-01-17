@@ -4,6 +4,11 @@ import { DEFAULT_PRIMARY } from "@/config/config";
 import piniaPersistConfig from "@/config/piniaPersist";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
+
+import { loginApi } from "@/api/modules/login";
+import { Login } from "@/api/interface";
+
+
 export const GlobalStore = defineStore('GlobalState',{
   state: (): GlobalState => ({
     token: "",
@@ -23,9 +28,22 @@ export const GlobalStore = defineStore('GlobalState',{
       tabsIcon: false,
       footer: false,
       maximize: false,
+      
     },
   }),
   actions: {
+    login(params: Login.ReqLoginForm) {
+      return new Promise((resolve, reject) => {
+        loginApi(params)
+          .then((res) => {
+            this.setToken(res.token)
+            resolve(res);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
     setToken(token: string) {
       this.token = token;
     },

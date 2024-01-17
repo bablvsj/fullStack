@@ -32,7 +32,7 @@
             <template #prefix><lock-outlined type="user" /></template>
           </a-input>
         </a-form-item>
-        <a-form-item name="verifyCode">
+        <!-- <a-form-item name="verifyCode">
           <a-input
             v-model:value="state.formInline.verifyCode"
             placeholder="验证码"
@@ -48,7 +48,7 @@
               />
             </template>
           </a-input>
-        </a-form-item>
+        </a-form-item> -->
         <a-form-item>
           <a-button
             type="primary"
@@ -73,12 +73,9 @@ import {
   SafetyOutlined,
 } from "@ant-design/icons-vue";
 import { useRoute, useRouter } from "vue-router";
-// import { message } from "ant-design-vue";
-import { UserStore } from "@/store/modules/user";
-// import { getImageCaptcha } from "@/api/login";
 import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
-// import { to } from '@/utils/awaitTo';
+import { GlobalStore } from "@/store";
 
 const loginForm = ref();
 
@@ -130,43 +127,27 @@ const rules: Record<string, Rule[]> = {
     },
   ],
 };
-const userStore = UserStore();
+const globalStore = GlobalStore();
 
-const setCaptcha = async () => {
-  // const { id, img } = await getImageCaptcha({ width: 100, height: 50 });
-  // state.captcha = img;
-  // state.formInline.captchaId = id;
-};
-// setCaptcha();
+// const setCaptcha = async () => {
+//   const { id, img } = await getImageCaptcha({ width: 100, height: 50 });
+//   state.captcha = img;
+//   state.formInline.captchaId = id;
+// };
 
 const handleSubmit = () => {
   loginForm.value
     .validate()
     .then(() => {
-      // console.log('通过', res)
-      // message.loading("登录中...");
+     
       state.loading = true;
-      userStore.login(state.formInline).then((res) => {
+      globalStore.login(state.formInline).then((res) => {
         console.log(res);
         state.loading = false;
         message.success("登录成功！")
+        router.replace((route.query.redirect as string) ?? "/")
       });
-      // params.password = md5(password)
-      // const [err] = await to();
-      // if (err) {
-      //   Modal.error({
-      //     title: () => "提示",
-      //     content: () => err.message,
-      //   });
-      //   setCaptcha();
-      // } else {
-      //   message.success("登录成功！");
-      //   setTimeout(() =>
-      //     router.replace((route.query.redirect as string) ?? "/")
-      //   );
-      // }
-      // state.loading = false;
-      // message.destroy();
+
     })
     .catch(() => {});
 };
@@ -185,14 +166,13 @@ const handleSubmit = () => {
   overflow: hidden;
   box-sizing: border-box;
   z-index: 1;
+  overflow: hidden;
 
   .login-content {
-    padding-top: 50px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    height: 500px;
     text-align: center;
     z-index: 3;
   }
@@ -219,14 +199,14 @@ const handleSubmit = () => {
   }
 
   :deep(.ant-form) {
-    width: 400px;
+    min-width: 300px;
 
     .ant-col {
       width: 100%;
     }
 
     .ant-form-item-label {
-      padding-right: 6px;
+      // padding-right: 6px;
     }
   }
 }
