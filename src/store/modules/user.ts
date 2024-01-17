@@ -15,8 +15,20 @@ export const UserStore = defineStore("UserStore", {
   }),
   actions: {
     login(params: Login.ReqLoginForm) {
-      loginApi(params).then((res) => {
-        console.log(res);
+      return new Promise((resolve, reject) => {
+        // loginApi(params).then((res) => {
+        //   console.log(res);
+        // });
+
+        loginApi(params)
+          .then((res) => {
+            // setToken(res.token)
+            // this.token = res.token
+            resolve(res);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       });
     },
   },

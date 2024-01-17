@@ -1,14 +1,17 @@
 <template>
   <ProConfigProvider>
-    <router-view></router-view> 
+    <a-spin :spinning="loadingStore.loadingStatus" :tip="loadingStore.loadingText">
+      <router-view></router-view>
+    </a-spin>
   </ProConfigProvider>
 </template>
 
+<script setup lang="ts">
+import { LoadingStore } from '@/store/modules/loading'
+const loadingStore = LoadingStore()
+</script>
+
 <style scoped>
-
-
-
-
 .logo {
   height: 6em;
   padding: 1.5em;

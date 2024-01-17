@@ -73,10 +73,11 @@ import {
   SafetyOutlined,
 } from "@ant-design/icons-vue";
 import { useRoute, useRouter } from "vue-router";
-import { message, Modal } from "ant-design-vue";
+// import { message } from "ant-design-vue";
 import { UserStore } from "@/store/modules/user";
 // import { getImageCaptcha } from "@/api/login";
 import type { Rule } from "ant-design-vue/es/form";
+import { message } from "ant-design-vue";
 // import { to } from '@/utils/awaitTo';
 
 const loginForm = ref();
@@ -95,7 +96,7 @@ const state = reactive({
 const route = useRoute();
 const router = useRouter();
 
-const rules = {
+const rules: Record<string, Rule[]> = {
   username: [
     {
       required: true,
@@ -143,25 +144,29 @@ const handleSubmit = () => {
     .validate()
     .then(() => {
       // console.log('通过', res)
-      message.loading("登录中...", 0);
+      // message.loading("登录中...");
       state.loading = true;
-      userStore.login(state.formInline).console.log(state.formInline);
+      userStore.login(state.formInline).then((res) => {
+        console.log(res);
+        state.loading = false;
+        message.success("登录成功！")
+      });
       // params.password = md5(password)
       // const [err] = await to();
-      if (err) {
-        Modal.error({
-          title: () => "提示",
-          content: () => err.message,
-        });
-        setCaptcha();
-      } else {
-        message.success("登录成功！");
-        setTimeout(() =>
-          router.replace((route.query.redirect as string) ?? "/")
-        );
-      }
-      state.loading = false;
-      message.destroy();
+      // if (err) {
+      //   Modal.error({
+      //     title: () => "提示",
+      //     content: () => err.message,
+      //   });
+      //   setCaptcha();
+      // } else {
+      //   message.success("登录成功！");
+      //   setTimeout(() =>
+      //     router.replace((route.query.redirect as string) ?? "/")
+      //   );
+      // }
+      // state.loading = false;
+      // message.destroy();
     })
     .catch(() => {});
 };
@@ -179,21 +184,7 @@ const handleSubmit = () => {
   background-size: cover;
   overflow: hidden;
   box-sizing: border-box;
-  // filter: blur(2px);
   z-index: 1;
-
-  // &:after {
-  //   content: "";
-  //   width: 100%;
-  //   height: 100%;
-  //   position: absolute;
-  //   left: 0;
-  //   top: 0;
-  //   /* 从父元素继承 background 属性的设置 */
-  //   background: inherit;
-  //   filter: blur(2px);
-  //   z-index: 2;
-  // }
 
   .login-content {
     padding-top: 50px;

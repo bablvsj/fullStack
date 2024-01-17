@@ -4,10 +4,11 @@ import axios, {
   AxiosRequestConfig,
   AxiosInstance,
 } from "axios";
-import { fullScreenLoading } from "@/config/serviceLoading";
+// import { fullScreenLoading } from "@/config/serviceLoading";
 // import { showLoading, hideLoading } from "@/config/serviceLoading";
 import { ResultEnum } from "@/enums/requestEnum";
 import { GlobalStore } from "@/store";
+import { LoadingStore } from "@/store/modules/loading";
 import { ResultData } from "@/api/interface";
 import { message, Spin } from "ant-design-vue";
 import router from "@/router";
@@ -63,7 +64,7 @@ class Request {
         console.log(config);
         const globalStore = GlobalStore();
         // 如果当前请求不需要显示loading，在api服务中通过指定第三个参数：{headers:{"noLoading:true"}} 来控制不显示loading，参见loginApi
-        config.headers!.noLoading || fullScreenLoading();
+        config.headers?.loading && LoadingStore().show();
         const token: string = globalStore.token;
         return {
           ...config,
@@ -78,7 +79,7 @@ class Request {
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
         console.log(response);
-        fullScreenLoading(false);
+        LoadingStore().hide();
 
         const { data } = response;
         const globalStore = GlobalStore();
@@ -99,7 +100,7 @@ class Request {
       },
       async (error: AxiosError) => {
         const { response } = error;
-        fullScreenLoading(false);
+        LoadingStore().hide();
         if (error.message.indexOf("timeout") !== -1)
           message.error("请求超时！请您稍后重试");
 
