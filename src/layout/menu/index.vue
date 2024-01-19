@@ -1,5 +1,5 @@
 <template>
-  <a-menu v-model:selectedKeys="selectedKeys" :theme="theme" mode="inline">
+  <a-menu v-model:selectedKeys="selectedKeys" :theme="theme" mode="inline" >
     <a-menu-item key="1">
       <user-outlined />
       <span class="nav-text">nav 1</span>

@@ -6,12 +6,7 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 import { loginApi } from "@/api/modules/login";
 import { Login } from "@/api/interface";
-import { Storage } from "@/utils/Storage";
 
-import { THEME_KEY } from "@/enums/cacheEnum";
-import { themeColor, type ThemeColor } from "./interface";
-import { theme as antdTheme } from "ant-design-vue";
-import { ThemeConfig } from "ant-design-vue/es/config-provider/context";
 
 export const GlobalStore = defineStore("GlobalState", {
   state: (): GlobalState => ({
