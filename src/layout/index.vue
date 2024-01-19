@@ -11,15 +11,12 @@
       </div>
       <Menu />
     </a-layout-sider>
-    <a-layout-content :style="{ margin: '24px 16px 0' }" class="layout-content">
-        <Header />
-
-        <div
-          :style="{ padding: '24px', background: '#fff', minHeight: '360px' }"
-        >
-          content
-        </div>
-      </a-layout-content>
+    <a-layout-content :style="{ margin: '0' }" class="layout-content">
+      <Header />
+      <div :style="{ padding: '10px', background: '#fff', minHeight: '360px' }">
+        content
+      </div>
+    </a-layout-content>
   </a-layout>
 </template>
 <script lang="ts" setup>
@@ -42,10 +39,12 @@ const onBreakpoint = (broken: boolean) => {
 <style scoped lang="scss">
 .layout {
   height: 100vh;
+  width: 100vw;
+  display: flex;
 }
 
-.layout-content{
-   flex: 1;
+.layout-content {
+  flex: 1;
 }
 
 .logo {

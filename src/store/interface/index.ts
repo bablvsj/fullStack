@@ -1,3 +1,6 @@
+import { theme } from "ant-design-vue";
+
+const { defaultAlgorithm, darkAlgorithm } = theme;
 export interface ThemeConfigProps {
   layout: string;
   primary: string;
@@ -11,6 +14,7 @@ export interface ThemeConfigProps {
   tabsIcon: boolean;
   footer: boolean;
   maximize: boolean;
+  theme?: string;
 }
 
 export interface GlobalState {
@@ -19,4 +23,11 @@ export interface GlobalState {
   assemblySize: string;
   language?: string;
   themeConfig: ThemeConfigProps;
+  theme: string;
 }
+
+export const themeColor = {
+  light: defaultAlgorithm,
+  dark: defaultAlgorithm,
+} as const;
+export type ThemeColor = keyof typeof themeColor;
