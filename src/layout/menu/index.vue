@@ -1,5 +1,10 @@
 <template>
-  <a-menu v-model:selectedKeys="selectedKeys" :theme="theme" mode="inline" >
+  <a-menu
+    v-model:selectedKeys="selectedKeys"
+    :theme="theme"
+    mode="inline"
+    :collapsed="collapsed"
+  >
     <a-menu-item key="1">
       <user-outlined />
       <span class="nav-text">nav 1</span>
@@ -20,10 +25,21 @@
 </template>
 
 <script setup lang="ts">
+import {
+  UserOutlined,
+  UploadOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons-vue";
 import { GlobalStore } from "@/store";
 import { ref } from "vue";
 const selectedKeys = ref<string[]>(["4"]);
 const globalStore = GlobalStore();
+
+defineProps({
+  collapsed: {
+    type: Boolean,
+  },
+});
 
 const theme = computed(() => globalStore.themeConfig.theme);
 </script>

@@ -15,6 +15,8 @@ export interface ThemeConfigProps {
   footer: boolean;
   maximize: boolean;
   theme?: string;
+  algorithm: any;
+  colorPrimary:string
 }
 
 export interface GlobalState {
@@ -24,6 +26,7 @@ export interface GlobalState {
   language?: string;
   themeConfig: ThemeConfigProps;
   theme: string;
+  layoutSetting: any;
 }
 
 export const themeColor = {

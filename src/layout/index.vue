@@ -1,36 +1,35 @@
 <template>
   <a-layout class="layout">
     <a-layout-sider
+      class="layout-sider"
       breakpoint="lg"
-      collapsed-width="0"
-      @collapse="onCollapse"
+      :collapsed-width="asiderWidth"
+      v-model:collapsed="collapsed"
       @breakpoint="onBreakpoint"
     >
-      <div class="logo">
+      <div class="logo" :class="collapsed ? 'logo-collapased' : ''">
         <img src="@/assets/images/logo.jpg" alt="" />
       </div>
-      <Menu />
+      <Menu :collapsed="collapsed" />
     </a-layout-sider>
     <a-layout-content :style="{ margin: '0' }" class="layout-content">
-      <Header />
-      <div :style="{ padding: '10px', background: '#fff', minHeight: '360px' }">
-        content
-      </div>
+      <Header v-model:collapsed="collapsed" />
+      <div class="layout-container"><router-view /></div>
     </a-layout-content>
   </a-layout>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="Layout">
 import { ref } from "vue";
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons-vue";
 import Menu from "./menu/index.vue";
 import Header from "./header/index.vue";
-const onCollapse = (collapsed: boolean, type: string) => {
-  console.log(collapsed, type);
-};
+
+// const onCollapse = (collapsed: boolean, type: string) => {
+//   console.log(collapsed, type);
+// };
+
+const collapsed = ref<boolean>(false);
+// 自定义侧边栏菜单收缩和展开时的宽度
+const asiderWidth = computed(() => (collapsed.value ? 50 : 220));
 
 const onBreakpoint = (broken: boolean) => {
   console.log(broken);
@@ -48,13 +47,24 @@ const onBreakpoint = (broken: boolean) => {
 }
 
 .logo {
-  background: rgba(255, 255, 255, 0.2);
+  background: #fff;
   padding: 5px 20px;
 
   img {
     width: 32px;
     border-radius: 50%;
   }
+}
+
+.layout-container {
+  padding: 10px;
+  background: #edf1f7;
+  height: calc(100% - 40px);
+}
+
+.logo-collapased {
+  padding: 5px;
+  text-align: center;
 }
 
 .site-layout-sub-header-background {
@@ -66,6 +76,34 @@ const onBreakpoint = (broken: boolean) => {
 }
 
 [data-theme="dark"] .site-layout-sub-header-background {
-  background: #141414;
+  // background: #141414;
+}
+
+:deep(.ant-layout) {
+  .ant-layout {
+    background: #fff;
+  }
+}
+</style>
+
+<style lang="scss">
+.layout-sider {
+  background: #fff !important;
+}
+
+.dark {
+  color: #fff;
+
+  .logo {
+    background: #001529 !important;
+  }
+
+  .layout-sider {
+    background: #001529 !important;
+  }
+
+  .layout-container {
+    background: #151a30;
+  }
 }
 </style>

@@ -4,11 +4,7 @@ import NProgress from "@/config/nprogress";
 import { GlobalStore } from "@/store";
 
 let commonRoutes = [
-  {
-    path: "/home",
-    name: "Home",
-    component: () => import("@/views/home.vue"),
-  },
+ 
   {
     path: "/login",
     name: "Login",
@@ -19,8 +15,15 @@ let commonRoutes = [
 let dynamicRoutes = [
   {
     path: "/",
-    name: "Home",
+    name: "Layout",
     component: () => import("@/layout/index.vue"),
+    children:[
+      {
+        path: "/home",
+        name: "Home",
+        component: () => import("@/views/home.vue"),
+      },
+    ]
   },
 ];
 
