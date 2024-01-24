@@ -45,8 +45,9 @@
     </a-space>
     <a-space :size="spaceSize">
       <FullScreen />
-      <Setting />
       <SystemTheme :theme="theme" />
+      <Setting />
+
     </a-space>
     <!-- <a-space :size="spaceSize"></a-space> -->
   </a-layout-header>
@@ -73,7 +74,6 @@ defineProps({
 const emit = defineEmits(["update:collapsed"]);
 
 const globalStore = GlobalStore();
-const { layout } = globalStore.themeConfig;
 const theme = computed(() => globalStore.themeConfig.theme);
 
 const headerStyle = computed<CSSProperties>(() => {

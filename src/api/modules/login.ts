@@ -4,9 +4,9 @@ import http from "@/api/request";
 export const loginApi = (params: Login.ReqLoginForm) => {
   return http.post<Login.ResLogin>(
     "/login",
-    params
-    //    {
-    //     headers: { loading: true },
-    //   }
+    params,
+       {
+        headers: { loading: true },
+      }
   );
 };

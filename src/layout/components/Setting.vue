@@ -1,5 +1,6 @@
 <template>
-  <SettingOutlined @click="showDrawer" />
+  <!-- <SettingOutlined @click="showDrawer" /> -->
+  <LogoutOutlined class="cursor-point" @click="logout" />
   <!-- <Drawer v-model:open="visible" placement="right" :closable="false">
     <Descriptions title="整体风格" :column="5">
       <Descriptions.Item v-for="theme in themeStyle" :key="theme.value">
@@ -60,46 +61,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, type StyleValue } from "vue";
-import { SettingOutlined } from "@ant-design/icons-vue";
-import { storeToRefs } from "pinia";
-import { Drawer, Descriptions, Tag, Tooltip } from "ant-design-vue";
-import { GlobalStore } from "@/store";
-// import { layouts, themeColors, themeStyle } from './constant';
-// import type { ThemeColor } from './constant';
-// import type { LayoutSetting } from '@/store';
-// import { useLayoutSettingStore } from '@/store/modules/layoutSetting';
+// import { ref } from "vue";
+import { LogoutOutlined } from "@ant-design/icons-vue";
+import { useRouter } from "vue-router";
 
-const { themeConfig } = GlobalStore();
-// const { layoutSetting } = storeToRefs(GlobalStore);
-// const customColor = ref(layoutSetting.value.colorPrimary);
-const visible = ref(false);
+const router = useRouter();
 
-// const colorPickerStyle = computed(
-//   () => ({ "--custom-color": customColor.value } as StyleValue)
-// );
-
-// const setNavTheme = (theme: ThemeColor) => {
-//     themeConfig.updateLayoutSetting({ navTheme: theme });
-// };
-// const setLayout = (layout: LayoutSetting["layout"]) => {
-//     themeConfig.updateLayoutSetting({ layout });
-// };
-
-// const setThemeColor = (colorPrimary: string) => {
-//     themeConfig.updateLayoutSetting({ colorPrimary });
-// };
-
-const getThemeColorVisible = (color) =>
-  layoutSetting.value.colorPrimary === color ? "visible" : "hidden";
-
-// const getImageUrl = (theme: ThemeName) => {
-//   return new URL(`/src/assets/icons/${theme}.svg`, import.meta.url).href;
-// };
-
-const showDrawer = () => {
-  visible.value = true;
+const logout = () => {
+  localStorage.clear();
+  router.replace("/login");
 };
+
 </script>
 
 <style lang="less" scoped>

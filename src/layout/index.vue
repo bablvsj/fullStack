@@ -12,9 +12,9 @@
       </div>
       <Menu :collapsed="collapsed" />
     </a-layout-sider>
-    <a-layout-content :style="{ margin: '0' }" class="layout-content">
+    <a-layout-content :style="{ margin: '0' }" class="layout-right">
       <Header v-model:collapsed="collapsed" />
-      <div class="layout-container"><router-view /></div>
+      <div class="layout-content"><router-view /></div>
     </a-layout-content>
   </a-layout>
 </template>
@@ -37,13 +37,15 @@ const onBreakpoint = (broken: boolean) => {
 </script>
 <style scoped lang="scss">
 .layout {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
+  height: 100%;
+  width: 100%;
+  // display: flex;
+  overflow: hidden;
 }
 
-.layout-content {
+.layout-right {
   flex: 1;
+  height: 100%;
 }
 
 .logo {
@@ -56,10 +58,34 @@ const onBreakpoint = (broken: boolean) => {
   }
 }
 
-.layout-container {
+.layout-content {
   padding: 10px;
   background: #edf1f7;
   height: calc(100% - 40px);
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 16px;
+    background-color: #f5f5f5;
+  }
+
+  /*定义滚动条轨道 内阴影+圆角*/
+  // &::-webkit-scrollbar-track {
+  //   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  //   border-radius: 2px;
+  //   background-color: #f5f5f5;
+  // }
+
+  /*定义滑块 内阴影+圆角*/
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: rgb(122, 120, 120);
+  }
 }
 
 .logo-collapased {

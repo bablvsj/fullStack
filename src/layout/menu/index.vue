@@ -4,6 +4,8 @@
     :theme="theme"
     mode="inline"
     :collapsed="collapsed"
+    :items="items"
+    @click="handleClick"
   >
     <a-menu-item key="1">
       <user-outlined />
@@ -35,6 +37,11 @@ import { ref } from "vue";
 const selectedKeys = ref<string[]>(["4"]);
 const globalStore = GlobalStore();
 
+import { useRouter } from "vue-router";
+
+// const route = useRoute();
+const router = useRouter();
+
 defineProps({
   collapsed: {
     type: Boolean,
@@ -42,4 +49,35 @@ defineProps({
 });
 
 const theme = computed(() => globalStore.themeConfig.theme);
+
+const current = ref<string[]>(["/home"]);
+
+const items = ref([
+  {
+    key: "/",
+    icon: () => h(UserOutlined),
+    label: "Home",
+    title: "Home",
+    url: "/",
+  },
+  // {
+  //   key: "/product",
+  //   label: "产品",
+  //   title: "Navigation Two",
+  // },
+  {
+    key: "/gsap/scrollChangePhoneColor",
+    url: "/gsap/scrollChangePhoneColor",
+    icon: () => h(UploadOutlined),
+    label: "GSAP",
+    title: "GSAP",
+  },
+]);
+
+const handleClick = (e: any) => {
+  let url = e.item.url;
+  if (url) {
+    router.push(url);
+  }
+};
 </script>

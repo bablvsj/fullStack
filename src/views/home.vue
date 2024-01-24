@@ -4,6 +4,6 @@
     </div>
 </template>
 
-<script name="Home">
+<script setup lang="ts" name="Home">
 
 </script>

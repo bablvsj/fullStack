@@ -12,8 +12,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   // console.log(env);
-  console.log(env.VITE_PORT);
-  console.log(env.VITE_OPEN);
+  // console.log(env.VITE_PORT);
+  // console.log(env.VITE_OPEN);
 
   return {
     plugins: [
@@ -50,7 +50,7 @@ export default defineConfig(({ mode }) => {
 
       host: "0.0.0.0",
 			port: env.VITE_PORT,
-			open: env.VITE_OPEN,
+			// open: env.VITE_OPEN,
 			cors: true,
 			hmf: true, //开启热更新
 			// 跨域代理配置

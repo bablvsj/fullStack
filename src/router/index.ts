@@ -4,7 +4,6 @@ import NProgress from "@/config/nprogress";
 import { GlobalStore } from "@/store";
 
 let commonRoutes = [
- 
   {
     path: "/login",
     name: "Login",
@@ -17,13 +16,24 @@ let dynamicRoutes = [
     path: "/",
     name: "Layout",
     component: () => import("@/layout/index.vue"),
-    children:[
+    children: [
       {
         path: "/home",
         name: "Home",
         component: () => import("@/views/home.vue"),
       },
-    ]
+      {
+        path: "/gsap",
+        name: "Home",
+        children: [
+          {
+            path: "/gsap/scrollChangePhoneColor",
+            name: "ScrollChangePhoneColor",
+            component: () => import("@/views/gsap/scrollChangePhoneColor/index.vue"),
+          },
+        ],
+      },
+    ],
   },
 ];
 

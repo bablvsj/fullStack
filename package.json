@@ -8,12 +8,13 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "build:dev": "vue-tsc --noEmit && vite build --mode development",
-		"build:test": "vue-tsc --noEmit && vite build --mode test",
-		"build:pro": "vue-tsc --noEmit && vite build --mode production"
+    "build:test": "vue-tsc --noEmit && vite build --mode test",
+    "build:pro": "vue-tsc --noEmit && vite build --mode production"
   },
   "dependencies": {
     "ant-design-vue": "^4.0.8",
     "axios": "^1.6.4",
+    "gsap": "^3.12.5",
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
