@@ -54,11 +54,11 @@ const current = ref<string[]>(["/home"]);
 
 const items = ref([
   {
-    key: "/",
+    key: "/home",
     icon: () => h(UserOutlined),
     label: "Home",
     title: "Home",
-    url: "/",
+    url: "/home",
   },
   // {
   //   key: "/product",
@@ -72,11 +72,19 @@ const items = ref([
     label: "GSAP",
     title: "GSAP",
   },
+  {
+    key: "/gsap/scroll/verticalImage",
+    url: "/gsap/scroll/verticalImage",
+    icon: () => h(UploadOutlined),
+    label: "verticalImage",
+    title: "垂直图片",
+  },
 ]);
 
 const handleClick = (e: any) => {
   let url = e.item.url;
   if (url) {
+    console.log(url)
     router.push(url);
   }
 };

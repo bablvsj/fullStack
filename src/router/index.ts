@@ -24,12 +24,16 @@ let dynamicRoutes = [
       },
       {
         path: "/gsap",
-        name: "Home",
+        name: "GSAP",
         children: [
           {
             path: "/gsap/scrollChangePhoneColor",
             name: "ScrollChangePhoneColor",
             component: () => import("@/views/gsap/scrollChangePhoneColor/index.vue"),
+          },{
+            path: "scroll/verticalImage",
+            name: "ScrollVerticalImage",
+            component: () => import("@/views/gsap/scroll/verticalImage.vue"),
           },
         ],
       },

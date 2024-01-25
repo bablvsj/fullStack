@@ -169,7 +169,8 @@ watch(
       </div>
       <div
         class="f-mask umx-blue"
-        style="display: block; overflow: hidden; height: 0%"
+        ref="umxBlue"
+        style=""
       >
         <div class="f-box">
           <figure class="umx-img umx-f2"></figure>
@@ -210,47 +211,47 @@ watch(
 </template>
 
 <script setup lang="ts">
-import { onMounted,ref } from "vue";
+import { onMounted, ref } from "vue";
 import gsap from "gsap";
 
-const containerX = ref()
+const containerX = ref();
+const umxBlue = ref();
 
-onMounted(()=>{
-
-  // gsapSet(); 
-  gsap.to(".containerX", {
-  opacity: 1,
-  scrollTrigger: {
-    trigger: ".containerX",
-    start: "top top",
-    end: "240%", // 向下滚动 240% 距离时结束
-    scrub: true, // 表示动画可以重复执行改成false表示只执行一次
-      markers: true, //  绘制开始位置和结束位置的线条
-    pin: true, // 动画执行期间，页面不进行滚动，动画执行结束后
-  },
-  onStart: () => {
-    console.log('动画开始')
-  }
-}).then(()=>{
-  console.log('111')
+onMounted(() => {
+  // gsapSet();
+  gsap
+    .to(".containerX", {
+      opacity: 1,
+      scrollTrigger: {
+        trigger: ".containerX",
+        start: "top top",
+        end: "280%", // 向下滚动 240% 距离时结束
+        scrub: true, // 表示动画可以重复执行改成false表示只执行一次
+        markers: true, //  绘制开始位置和结束位置的线条
+        pin: true, // 动画执行期间，页面不进行滚动，动画执行结束后
+      },
+      onStart: () => {
+        console.log("动画开始0");
+      },
+    })
+    .then(() => {
+      console.log("111");
+    });
 });
-
-})
-
 
 // 第一次动画，橙/蓝颜色切换
 // 蓝色手机覆盖橙色手机，触发实际，.umx-blue  进入 viewport
-gsap.to(".umx-blue", {
-  height: "100%",
+gsap.to(umxBlue.value, {
+  height:"100%",
   ease: "expo-out",
   scrollTrigger: {
-    trigger: ".umx-blue",
+    trigger: umxBlue.value,
     scrub: true,
-    //   markers: true,
+    markers: true,
   },
   onStart: () => {
-    console.log('动画开始2')
-  }
+    console.log("动画开始blue_text");
+  },
 });
 gsap.to(".blue-bg", {
   height: "100%",
@@ -258,8 +259,16 @@ gsap.to(".blue-bg", {
   scrollTrigger: {
     trigger: ".blue-bg",
     scrub: true,
+    // start: "top top",
+    // end: "+600",
     //   markers: true,
   },
+  onStart: () => {
+    console.log("动画开始blue_bg");
+  },
+  onUpdate:()=>{
+    console.log("blue更新中")
+  }
 });
 
 // 第二次动画，黑/蓝手机切换
@@ -273,6 +282,9 @@ gsap.to(".umx-black", {
     scrub: true,
     //   markers: true,
   },
+  onStart: () => {
+    console.log("动画开始 black_text");
+  },
 });
 gsap.to(".black-bg", {
   height: "100%",
@@ -283,6 +295,9 @@ gsap.to(".black-bg", {
     scrub: true,
     //   markers: true,
   },
+  onStart: () => {
+    console.log("动画开始 black_bgF");
+  },
 });
 </script>
 
@@ -291,7 +306,7 @@ gsap.to(".black-bg", {
   position: absolute;
   width: 100%;
   bottom: 0;
-  height: 1000px;
+  height: 100vh;
 }
 
 /* transform: translate(695px, 575px) scale(2.5, 2.5); */
@@ -319,6 +334,10 @@ gsap.to(".black-bg", {
   width: 100%;
   height: 0;
   bottom: 0;
+}
+
+.umx-blue{
+  display: block; overflow: hidden; height: 0%
 }
 /* 层级0:  固定图片在中间 */
 .umx-figure {
