@@ -296,14 +296,10 @@
 </template>
 
 <script setup lang="ts">
-// import { ScrollTrigger, ScrollToPlugin } from 'gsap/all'
-// import gsap from 'gsap'
 import SplitType from "split-type";
 import { onMounted } from "vue";
-// gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
-// import { gsap } from "gsap";
+import { gsap } from "gsap";
 
-const gsap = inject('$gsap')
 
 const backTop = () => {
   gsap.to(window, { duration: 3, scrollTo: 0, ease: "power3.out" });
@@ -387,7 +383,7 @@ const fadeAnimation = () => {
     scrollTrigger: {
       trigger: ".fadeContainer",
       start: "top center",
-      end: "+=5000px",
+      end: "+=2000px",
       pin: true,
       scrub: true,
     },
@@ -471,7 +467,7 @@ const fadeVideo = () => {
 };
 
 onMounted(() => {
-//   newsTicker();
+  newsTicker();
   scaleAnimation();
   fadeAnimation();
   setTimeout(() => {
@@ -487,6 +483,7 @@ onMounted(() => {
 //   height: calc(100vh - 40px);
 //   overflow-x: hidden;
 //   overflow-y: auto;
+  overflow: hidden;
   background: #000;
   color: rgb(204, 203, 203);
 }
@@ -558,11 +555,6 @@ onMounted(() => {
   min-height: 100vh;
 }
 
-.scaleContainer{
-    // text-align: center;
-    // display: flex;
-    // justify-content: center;
-}
 .scaleCircle {
   width: 60px;
   height: 60px;

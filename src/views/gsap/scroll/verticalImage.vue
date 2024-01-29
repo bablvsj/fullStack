@@ -1,15 +1,15 @@
 <template>
-  <div class="container">
+  <div>
     <section class="revealer" ref="industryPlan">
-    <div class="img-mask">
-      <img src="https://unsplash.it/800/450?image=766" />
-    </div>
-    <div class="img-mask">
-      <img src="https://unsplash.it/800/450?image=1080" />
-    </div>
-    <div class="overlay">Image Reveal on Scroll</div>
-  </section>
-  <section style="background-color: navy">More content...</section>
+      <div class="img-mask">
+        <img src="https://unsplash.it/800/450?image=766" />
+      </div>
+      <div class="img-mask">
+        <img src="https://unsplash.it/800/450?image=1080" />
+      </div>
+      <div class="overlay">Image Reveal on Scroll</div>
+    </section>
+    <section style="background-color: navy">More content...</section>
   </div>
 </template>
 
@@ -25,7 +25,6 @@ let ctx: any;
 
 const industryPlan = ref();
 const umxBlue = ref();
-
 
 onUnmounted(() => {
   ctx.revert(); // <- Easy Cleanup!

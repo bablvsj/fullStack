@@ -12,7 +12,7 @@
       </div>
       <Menu :collapsed="collapsed" />
     </a-layout-sider>
-    <a-layout-content :style="{ margin: '0' }" class="layout-right">
+    <a-layout-content :style="{ margin: '0' }" class="layout-right" :class="collapsed ? 'lr-collapased' : ''">
       <Header v-model:collapsed="collapsed" />
       <div class="layout-content"><router-view /></div>
     </a-layout-content>
@@ -46,6 +46,14 @@ const onBreakpoint = (broken: boolean) => {
 .layout-right {
   flex: 1;
   height: 100%;
+  padding-left: 200px;
+  // width: calc(100% - 200px) !important;
+
+}
+
+.lr-collapased{
+  padding-left:40px;
+  // width: calc(100% - 40px) !important;
 }
 
 .logo {
@@ -90,6 +98,7 @@ const onBreakpoint = (broken: boolean) => {
     background: #fff;
   }
 }
+
 </style>
 
 <style lang="scss">
