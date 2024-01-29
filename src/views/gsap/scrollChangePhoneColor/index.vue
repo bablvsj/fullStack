@@ -156,54 +156,52 @@ watch(
 </style> -->
 
 <template>
-  <div class="containerX" ref="containerX">
-    <!-- 3张手机图片叠加 -->
-    <div class="umx-figure">
-      <div class="f-mask umx-orange" style="overflow: hidden; height: 100%">
-        <div class="f-box">
-          <figure
-            class="umx-img umx-f1"
-            style="transform: translate(0px, 0px)"
-          ></figure>
+  <div class="container">
+    <div class="containerX" ref="containerX">
+      <!-- 3张手机图片叠加 -->
+      <div class="umx-figure">
+        <div class="f-mask umx-orange" style="overflow: hidden; height: 100%">
+          <div class="f-box">
+            <figure
+              class="umx-img umx-f1"
+              style="transform: translate(0px, 0px)"
+            ></figure>
+          </div>
+        </div>
+        <div class="f-mask umx-blue" ref="umxBlue" style="">
+          <div class="f-box">
+            <figure class="umx-img umx-f2"></figure>
+          </div>
+        </div>
+        <div
+          class="f-mask umx-black"
+          style="display: block; overflow: hidden; height: 0%"
+        >
+          <div class="f-box">
+            <figure class="umx-img umx-f3"></figure>
+          </div>
         </div>
       </div>
-      <div
-        class="f-mask umx-blue"
-        ref="umxBlue"
-        style=""
-      >
-        <div class="f-box">
-          <figure class="umx-img umx-f2"></figure>
+      <!-- 三个背景叠加 -->
+      <div class="mask-box">
+        <div class="color-bg orange-bg active" style="height: 100%">
+          <div class="color-txt" style="transform: translate(-50%, 0%)">
+            <strong>橙</strong>
+            <p>大胆和前卫<br />的姿态</p>
+          </div>
         </div>
-      </div>
-      <div
-        class="f-mask umx-black"
-        style="display: block; overflow: hidden; height: 0%"
-      >
-        <div class="f-box">
-          <figure class="umx-img umx-f3"></figure>
-        </div>
-      </div>
-    </div>
-    <!-- 三个背景叠加 -->
-    <div class="mask-box">
-      <div class="color-bg orange-bg active" style="height: 100%">
-        <div class="color-txt" style="transform: translate(-50%, 0%)">
-          <strong>橙</strong>
-          <p>大胆和前卫<br />的姿态</p>
-        </div>
-      </div>
 
-      <div class="color-bg blue-bg" style="height: 0%">
-        <div class="color-txt" style="transform: translate(-50%, 0%)">
-          <strong>蓝</strong>
-          <p>挑战和突破<br />的精神</p>
+        <div class="color-bg blue-bg" style="height: 0%">
+          <div class="color-txt" style="transform: translate(-50%, 0%)">
+            <strong>蓝</strong>
+            <p>挑战和突破<br />的精神</p>
+          </div>
         </div>
-      </div>
-      <div class="color-bg black-bg" style="height: 0px">
-        <div class="color-txt" style="transform: translate(-50%, 0%)">
-          <strong>黑</strong>
-          <p>简洁跳动<br />的语言</p>
+        <div class="color-bg black-bg" style="height: 0px">
+          <div class="color-txt" style="transform: translate(-50%, 0%)">
+            <strong>黑</strong>
+            <p>简洁跳动<br />的语言</p>
+          </div>
         </div>
       </div>
     </div>
@@ -242,7 +240,7 @@ onMounted(() => {
 // 第一次动画，橙/蓝颜色切换
 // 蓝色手机覆盖橙色手机，触发实际，.umx-blue  进入 viewport
 gsap.to(umxBlue.value, {
-  height:"100%",
+  height: "100%",
   ease: "expo-out",
   scrollTrigger: {
     trigger: umxBlue.value,
@@ -266,9 +264,9 @@ gsap.to(".blue-bg", {
   onStart: () => {
     console.log("动画开始blue_bg");
   },
-  onUpdate:()=>{
-    console.log("blue更新中")
-  }
+  onUpdate: () => {
+    console.log("blue更新中");
+  },
 });
 
 // 第二次动画，黑/蓝手机切换
@@ -336,8 +334,10 @@ gsap.to(".black-bg", {
   bottom: 0;
 }
 
-.umx-blue{
-  display: block; overflow: hidden; height: 0%
+.umx-blue {
+  display: block;
+  overflow: hidden;
+  height: 0%;
 }
 /* 层级0:  固定图片在中间 */
 .umx-figure {

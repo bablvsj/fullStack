@@ -59,33 +59,13 @@ const onBreakpoint = (broken: boolean) => {
 }
 
 .layout-content {
-  padding: 10px;
+  // padding: 10px;
   background: #edf1f7;
   height: calc(100% - 40px);
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-
-  /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-  &::-webkit-scrollbar {
-    width: 4px;
-    height: 16px;
-    background-color: #f5f5f5;
-  }
-
-  /*定义滚动条轨道 内阴影+圆角*/
-  // &::-webkit-scrollbar-track {
-  //   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  //   border-radius: 2px;
-  //   background-color: #f5f5f5;
-  // }
-
-  /*定义滑块 内阴影+圆角*/
-  &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: rgb(122, 120, 120);
-  }
+  // overflow:hidden;
+  // overflow-x: hidden;
+  // overflow-y: scroll;
 }
 
 .logo-collapased {
@@ -115,6 +95,10 @@ const onBreakpoint = (broken: boolean) => {
 <style lang="scss">
 .layout-sider {
   background: #fff !important;
+  position: fixed !important;
+  height: 100vh;
+  top: 0;
+  z-index: 999;
 }
 
 .dark {

@@ -35,6 +35,11 @@ let dynamicRoutes = [
             name: "ScrollVerticalImage",
             component: () => import("@/views/gsap/scroll/verticalImage.vue"),
           },
+          {
+            path: "demo",
+            name: "Demo",
+            component: () => import("@/views/gsap/demo.vue"),
+          },
         ],
       },
     ],

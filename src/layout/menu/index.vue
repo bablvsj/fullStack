@@ -79,6 +79,13 @@ const items = ref([
     label: "verticalImage",
     title: "垂直图片",
   },
+  {
+    key: "/gsap/demo",
+    url: "/gsap/demo",
+    icon: () => h(UploadOutlined),
+    label: "ScrollDemo",
+    title: "Demo",
+  },
 ]);
 
 const handleClick = (e: any) => {

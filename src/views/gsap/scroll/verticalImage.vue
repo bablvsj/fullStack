@@ -1,5 +1,6 @@
 <template>
-  <section class="revealer" ref="industryPlan">
+  <div class="container">
+    <section class="revealer" ref="industryPlan">
     <div class="img-mask">
       <img src="https://unsplash.it/800/450?image=766" />
     </div>
@@ -9,6 +10,7 @@
     <div class="overlay">Image Reveal on Scroll</div>
   </section>
   <section style="background-color: navy">More content...</section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,22 +26,6 @@ let ctx: any;
 const industryPlan = ref();
 const umxBlue = ref();
 
-// gsap.registerPlugin(ScrollTrigger);
-
-// let masks = gsap.utils.toArray(".img-mask");
-// console.log(masks);
-
-// gsap.to(masks[1], {
-//   height: "0%",
-//   ease: "none",
-//   scrollTrigger: {
-//     trigger: ".revealer",
-//     start: "top top",
-//     pin: true,
-//     end: "+=100%",
-//     scrub: 0.5,
-//   },
-// });
 
 onUnmounted(() => {
   ctx.revert(); // <- Easy Cleanup!

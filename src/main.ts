@@ -7,14 +7,17 @@ import "./style.css";
 import pinia from "@/store";
 import gsap from "gsap";
 
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/all";
+import { ScrollToPlugin } from "gsap/all";
 
 // Mock 数据引入
 import Mock from "./mock";
 Mock();
 
+
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const app = createApp(App);
+app.provide('$gsap', gsap)
+
 app.use(Antd).use(router).use(pinia).mount("#app");
