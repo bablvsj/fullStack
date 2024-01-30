@@ -53,10 +53,12 @@
         <!-- 左文右圖 -->
         <div class="center">
           <div class="col-span-1">
-            <h2 class="font-bold splitText overflow-hidden first-text-art">
+            <h2
+              class="font-bold splitText overflow-hidden first-text-art splitText"
+            >
               AR T
             </h2>
-            <p class="first-text">
+            <p class="first-text splitText">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex
               numquam assumenda sed eligendi odio eveniet culpa voluptas dolorem
               doloremque. Ratione.
@@ -74,44 +76,22 @@
       </div>
       <!-- 第二區塊 -->
       <div class="w-full relative scaleContainer">
-        <div
-          class="scaleCircle w-60px h-60px rounded-full bg-gradient-to-l from-#C30500 to-#017AB6 absolute top-0 left-1/2 -translate-x-1/2 flex items-center justify-center text-white"
-        >
-          <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10px h-10px rounded-full scale-0 bg-#000 scaleCircle2 z-10"
-          ></div>
+        <div class="scaleCircle">
+          <div class="scaleCircle2"></div>
           <p class="scaleText">Go</p>
         </div>
       </div>
 
       <!-- 第三區塊 -->
       <div class="w-full relative fadeContainer">
-        <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fadeText1 op0"
-        >
-          <p
-            class="text-50px md:text-100px font-bold text-white tracking-20px text-center"
-          >
-            GSAP
-          </p>
+        <div class="fadeText fadeText1">
+          <p>GSAP</p>
         </div>
-        <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fadeText2 opacity-0"
-        >
-          <p
-            class="text-50px md:text-100px font-bold text-white tracking-20px text-center"
-          >
-            IS
-          </p>
+        <div class="fadeText fadeText2">
+          <p>IS</p>
         </div>
-        <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fadeText3 opacity-0"
-        >
-          <p
-            class="text-50px md:text-100px font-bold text-white tracking-20px text-center"
-          >
-            AWESOME
-          </p>
+        <div class="fadeText fadeText3">
+          <p>AWESOME</p>
         </div>
       </div>
 
@@ -119,7 +99,7 @@
       <div
         class="min-h-screen bg-black mt-300px px-[5%] overflow-x-hidden mx-auto pt-300px"
       >
-        <div class="columns-5 gap-50px">
+        <div class="fade-img-box">
           <img
             src="https://images.unsplash.com/photo-1501472393568-6d98729ac121?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
             class="w-full mt-50px fadeImg opacity-0"
@@ -220,9 +200,7 @@
       </div>
 
       <!-- 第五區塊 -->
-      <div
-        class="w-full h-screen flex whitespace-nowrap overflow-hidden bg-black horizonContainer"
-      >
+      <div class="horizonContainer">
         <div
           class="w-full h-full flex items-center justify-center flex-none horizon__item"
         >
@@ -271,9 +249,7 @@
       </div>
 
       <!-- 第六區塊 -->
-      <div class="w-full h-screen fadeVideoContainer bg-black">
-        <!-- autoplay="autoplay"
-            muted="muted" -->
+      <div class="w-full h-screen fadeVideoContainer bg-black" style="margin-top:100px;">
         <video
           loop="true"
           playsinline="true"
@@ -300,11 +276,9 @@ import SplitType from "split-type";
 import { onMounted } from "vue";
 import { gsap } from "gsap";
 
-
 const backTop = () => {
   gsap.to(window, { duration: 3, scrollTo: 0, ease: "power3.out" });
 };
-
 
 const newsTicker = () => {
   gsap.to(".newsTicker", {
@@ -321,7 +295,7 @@ const newsTicker = () => {
     duration: 25,
     repeat: -1,
   });
-  const text = new SplitType(".first-text", { types: "words, chars" });
+  const text = new SplitType(".splitText", { types: "words, chars" });
 
   gsap.from(text.chars, {
     opacity: 0,
@@ -348,10 +322,9 @@ const scaleAnimation = () => {
       end: "+=3000px",
       pin: true,
       scrub: true,
-      markers:true
+      // markers:true
     },
   });
-  console.log(tl)
 
   tl.to(".scaleCircle", {
     scale: "50",
@@ -366,7 +339,8 @@ const scaleAnimation = () => {
       "<"
     )
     .to(".scaleCircle2", {
-      scale: "5",
+      opacity: 1,
+      scale: 5,
       duration: 1,
     })
     .to(
@@ -383,7 +357,7 @@ const fadeAnimation = () => {
     scrollTrigger: {
       trigger: ".fadeContainer",
       start: "top center",
-      end: "+=2000px",
+      end: "+=5000px",
       pin: true,
       scrub: true,
     },
@@ -480,11 +454,11 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .demo-box {
-//   height: calc(100vh - 40px);
-//   overflow-x: hidden;
-//   overflow-y: auto;
+  //   height: calc(100vh - 40px);
+  //   overflow-x: hidden;
+  //   overflow-y: auto;
   overflow: hidden;
-  background: #000;
+  background-color: #000;
   color: rgb(204, 203, 203);
 }
 
@@ -543,6 +517,14 @@ onMounted(() => {
   // text-30px lh-40px splitText overflow-hidden
 }
 
+.relative {
+  position: relative;
+}
+
+.scaleContainer {
+  position: relative;
+}
+
 .newsTicker2 {
   right: -50%;
 }
@@ -568,6 +550,82 @@ onMounted(() => {
   line-height: 60px;
   left: 50%;
   position: absolute;
+  z-index: 9;
+  top: 0;
+  transform: translateX(50%);
 }
+
+.scaleCircle2 {
+  translate: none;
+  rotate: none;
+  scale: none;
+  transform: translate(-50%, -50%) scale(0, 0);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  position: absolute;
+  z-index: 8;
+  opacity: 1;
+  // transform: scale(0);
+  top: 50%;
+  // transform: translate(-50%, -50%) translate(0, 0px);
+  background-color: #000;
+}
+
+.fadeText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translate(0.5px, 0px);
+  opacity: 0;
+
+  p {
+    font-size: 100px;
+    color: #fff;
+  }
+}
+
+.fade-img-box {
+  margin-top: 300px;
+  padding: 0 5%;
+  display: grid;
+  grid-column-gap: 50px;
+  // grid-template-columns:5;
+  grid-template-columns: repeat(5,auto);
+  justify-content: align-content;
+  // flex-wrap: wrap;
+  // justify-content: space-evenly;
+}
+
+.fadeImg {
+  // width: 20%;
+  margin-top: 20px;
+}
+
+.horizonContainer {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+  // w-full h-screen flex whitespace-nowrap overflow-hidden bg-black
+}
+
+.horizon__item {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.object-contain {
+  width: 300px;
+  margin-right: 50px;
+}
+
 // -right-50%
 </style>

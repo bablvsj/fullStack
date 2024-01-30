@@ -39,8 +39,9 @@ const onBreakpoint = (broken: boolean) => {
 .layout {
   height: 100%;
   width: 100%;
+  // overflow-x: hidden;
   // display: flex;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .layout-right {
@@ -52,7 +53,7 @@ const onBreakpoint = (broken: boolean) => {
 }
 
 .lr-collapased{
-  padding-left:40px;
+  padding-left:50px;
   // width: calc(100% - 40px) !important;
 }
 

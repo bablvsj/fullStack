@@ -40,14 +40,15 @@ watch(
         console.log(masks[1]);
 
         gsap.to(masks[1], {
-          height: "0%",
+          height: 0,
           ease: "none",
+          pin: true,
+
           scrollTrigger: {
             trigger: ".revealer",
             start: "top top",
-            pin: true,
             end: "+=100%",
-            scrub: 0.5,
+            scrub: 5,
           },
         });
         // boxes.forEach((box: any) => {
