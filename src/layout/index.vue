@@ -1,8 +1,8 @@
 <template>
   <a-layout class="layout">
+    <!-- breakpoint="lg" -->
     <a-layout-sider
       class="layout-sider"
-      breakpoint="lg"
       :collapsed-width="asiderWidth"
       v-model:collapsed="collapsed"
       @breakpoint="onBreakpoint"
@@ -12,7 +12,11 @@
       </div>
       <Menu :collapsed="collapsed" />
     </a-layout-sider>
-    <a-layout-content :style="{ margin: '0' }" class="layout-right" :class="collapsed ? 'lr-collapased' : ''">
+    <a-layout-content
+      :style="{ margin: '0' }"
+      class="layout-right"
+      :class="collapsed ? 'lr-collapased' : ''"
+    >
       <Header v-model:collapsed="collapsed" />
       <div class="layout-content"><router-view /></div>
     </a-layout-content>
@@ -23,11 +27,8 @@ import { ref } from "vue";
 import Menu from "./menu/index.vue";
 import Header from "./header/index.vue";
 
-// const onCollapse = (collapsed: boolean, type: string) => {
-//   console.log(collapsed, type);
-// };
+const collapsed = ref<boolean>(true);
 
-const collapsed = ref<boolean>(false);
 // 自定义侧边栏菜单收缩和展开时的宽度
 const asiderWidth = computed(() => (collapsed.value ? 50 : 220));
 
@@ -39,22 +40,16 @@ const onBreakpoint = (broken: boolean) => {
 .layout {
   height: 100%;
   width: 100%;
-  // overflow-x: hidden;
-  // display: flex;
-  // overflow: hidden;
 }
 
 .layout-right {
   flex: 1;
   height: 100%;
   padding-left: 200px;
-  // width: calc(100% - 200px) !important;
-
 }
 
-.lr-collapased{
-  padding-left:50px;
-  // width: calc(100% - 40px) !important;
+.lr-collapased {
+  padding-left: 50px;
 }
 
 .logo {
@@ -68,13 +63,9 @@ const onBreakpoint = (broken: boolean) => {
 }
 
 .layout-content {
-  // padding: 10px;
   background: #edf1f7;
-  height: calc(100% - 40px);
+  height: 100%;
   width: 100%;
-  // overflow:hidden;
-  // overflow-x: hidden;
-  // overflow-y: scroll;
 }
 
 .logo-collapased {
@@ -99,7 +90,6 @@ const onBreakpoint = (broken: boolean) => {
     background: #fff;
   }
 }
-
 </style>
 
 <style lang="scss">
@@ -122,7 +112,7 @@ const onBreakpoint = (broken: boolean) => {
     background: #001529 !important;
   }
 
-  .layout-container {
+  .layout-content {
     background: #151a30;
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <a-layout-header :style="headerStyle" class="layout-header" >
+  <div class="layout-header" :style="headerStyle">
     <a-space>
       <slot>
         <a-space :size="10">
@@ -47,10 +47,9 @@
       <FullScreen />
       <SystemTheme :theme="theme" />
       <Setting />
-
     </a-space>
     <!-- <a-space :size="spaceSize"></a-space> -->
-  </a-layout-header>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -62,7 +61,7 @@ import SystemTheme from "../components/SystemTheme.vue";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
 import { type MenuTheme } from "ant-design-vue";
 
-defineProps({
+const { collapsed } = defineProps({
   collapsed: {
     type: Boolean,
   },
@@ -79,10 +78,8 @@ const theme = computed(() => globalStore.themeConfig.theme);
 const headerStyle = computed<CSSProperties>(() => {
   const isDark = theme.value === "dark";
   return {
-    backgroundColor: isDark
-      ? "#1a2138"
-      : "rgba(255, 255, 255, 0.85)",
     color: isDark ? "rgba(255, 255, 255, 0.85)" : "",
+    width: collapsed ? "calc(100% - 40px)" : "calc(100% - 200px)",
   };
 });
 
@@ -91,11 +88,14 @@ const spaceSize = ref(10);
 
 <style scoped lang="scss">
 .layout-header {
+  // padding: ;
   width: 100%;
   display: flex;
   padding: 0 20px;
   height: 40px;
   text-align: end;
   justify-content: space-between;
+  position: fixed;
+  z-index: 999;
 }
 </style>

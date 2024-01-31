@@ -14,72 +14,41 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, onUnmounted, watch } from "vue";
+import { onMounted, ref, onUnmounted } from "vue";
 import gsap from "gsap";
 
-import { useTransitionComposable } from "@/composables/transition-composable";
-
-const { transitionState } = useTransitionComposable();
 // const main = ref();
 let ctx: any;
 
 const industryPlan = ref();
-const umxBlue = ref();
+
+onMounted(() => {
+  initGsap();
+});
+
+const initGsap = () => {
+  let arr = gsap.utils.toArray<HTMLElement>(".img-mask");
+    ctx = gsap.to(arr[1], {
+    height: 0,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".revealer",
+      start: "top top",
+      end: "+=200%",
+      scrub: 0.1,
+      pin: true,
+    },
+  });
+};
 
 onUnmounted(() => {
   ctx.revert(); // <- Easy Cleanup!
 });
-
-watch(
-  [() => transitionState.transitionComplete, industryPlan],
-  (newValue) => {
-    if (newValue && industryPlan.value) {
-      ctx = gsap.context((self: any) => {
-        console.log(self);
-        const masks = self.selector(".img-mask");
-        console.log(masks[1]);
-
-        gsap.to(masks[1], {
-          height: 0,
-          ease: "none",
-          pin: true,
-
-          scrollTrigger: {
-            trigger: ".revealer",
-            start: "top top",
-            end: "+=100%",
-            scrub: 5,
-          },
-        });
-        // boxes.forEach((box: any) => {
-        //   gsap.from(box, {
-        //     scrollTrigger: {
-        //       trigger: box,
-        //       start: "bottom bottom",
-        //       end: "top 50%",
-        //       // scrub: true,
-        //     },
-        //     // opacity:0.2,
-        //     // scale: 0.8,
-        //     duration: 2,
-        //     delay: 1,
-        //     opacity: 0,
-        //     y: 100,
-        //   });
-        // });
-      }, industryPlan.value); // <- Scope!
-    }
-  },
-  {
-    immediate: true,
-  }
-);
 </script>
 
 <style scoped>
 body {
   background: black;
-  color: white;
 }
 
 section {
@@ -88,6 +57,7 @@ section {
   font-size: 50px;
   text-align: center;
   line-height: 100vh;
+  color: white;
 }
 
 .img-mask {
@@ -98,8 +68,10 @@ section {
   display: flex;
   justify-content: center;
 }
+
 .img-mask img {
   height: 100vh;
+  min-width: 100vw;
 }
 
 .overlay {

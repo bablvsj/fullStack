@@ -249,7 +249,10 @@
       </div>
 
       <!-- 第六區塊 -->
-      <div class="w-full h-screen fadeVideoContainer bg-black" style="margin-top:100px;">
+      <div
+        class="w-full h-screen fadeVideoContainer bg-black"
+        style="margin-top: 100px"
+      >
         <video
           loop="true"
           playsinline="true"
@@ -273,7 +276,7 @@
 
 <script setup lang="ts">
 import SplitType from "split-type";
-import { onMounted } from "vue";
+import { onMounted, onBeforeUnmount } from "vue";
 import { gsap } from "gsap";
 
 const backTop = () => {
@@ -301,9 +304,9 @@ const newsTicker = () => {
     opacity: 0,
     // y: 10,
     ease: "power4.out",
-    duration: 1.5,
-    delay: 1,
-    stagger: { amount: 3 },
+    duration: 1,
+    delay: 0,
+    stagger: { amount: 0.7 },
   });
   gsap.to(".firstImg", {
     opacity: 0.5,
@@ -450,6 +453,10 @@ onMounted(() => {
     fadeVideo();
   }, 500);
 });
+
+onBeforeUnmount(() => {
+  backTop();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -463,7 +470,7 @@ onMounted(() => {
 }
 
 .first-block {
-  height: calc(100vh - 40px);
+  height: 100vh;
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -594,7 +601,7 @@ onMounted(() => {
   display: grid;
   grid-column-gap: 50px;
   // grid-template-columns:5;
-  grid-template-columns: repeat(5,auto);
+  grid-template-columns: repeat(5, auto);
   justify-content: align-content;
   // flex-wrap: wrap;
   // justify-content: space-evenly;

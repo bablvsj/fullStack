@@ -50,7 +50,7 @@ const main = ref();
 
 const { transitionState } = useTransitionComposable();
 onMounted(() => {
-  gsap.to(".box", {
+  tl.to(".box", {
     opacity: 1,
     scrollTrigger: {
       trigger: ".box",
@@ -67,11 +67,11 @@ watch(
   [() => transitionState.transitionComplete, main],
   (newValue) => {
     if (newValue && main.value) {
-      gsap.context((self: any) => {
+      tl.context((self: any) => {
         const boxes = self.selector(".phone-box");
         console.log(boxes);
         boxes.forEach((box: any) => {
-          gsap.to(box, {
+          tl.to(box, {
             height: "100%",
             ease: "expo-out",
           
@@ -156,7 +156,7 @@ watch(
 </style> -->
 
 <template>
-  <div class="container">
+  <div style="position:relative;">
     <div class="containerX" ref="containerX">
       <!-- 3张手机图片叠加 -->
       <div class="umx-figure">
@@ -209,15 +209,22 @@ watch(
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, onBeforeUnmount } from "vue";
 import gsap from "gsap";
 
 const containerX = ref();
 const umxBlue = ref();
 
+const tl = gsap.timeline()
+
 onMounted(() => {
-  // gsapSet();
-  gsap
+  initGsap();
+});
+
+const initGsap = () => {
+
+  
+  tl
     .to(".containerX", {
       opacity: 1,
       scrollTrigger: {
@@ -225,7 +232,7 @@ onMounted(() => {
         start: "top top",
         end: "280%", // 向下滚动 240% 距离时结束
         scrub: true, // 表示动画可以重复执行改成false表示只执行一次
-        markers: true, //  绘制开始位置和结束位置的线条
+        // markers: true, //  绘制开始位置和结束位置的线条
         pin: true, // 动画执行期间，页面不进行滚动，动画执行结束后
       },
       onStart: () => {
@@ -235,71 +242,83 @@ onMounted(() => {
     .then(() => {
       console.log("111");
     });
-});
 
-// 第一次动画，橙/蓝颜色切换
-// 蓝色手机覆盖橙色手机，触发实际，.umx-blue  进入 viewport
-gsap.to(umxBlue.value, {
-  height: "100%",
-  ease: "expo-out",
-  scrollTrigger: {
-    trigger: umxBlue.value,
-    scrub: true,
-    markers: true,
-  },
-  onStart: () => {
-    console.log("动画开始blue_text");
-  },
-});
-gsap.to(".blue-bg", {
-  height: "100%",
-  ease: "expo-out",
-  scrollTrigger: {
-    trigger: ".blue-bg",
-    scrub: true,
-    // start: "top top",
-    // end: "+600",
-    //   markers: true,
-  },
-  onStart: () => {
-    console.log("动画开始blue_bg");
-  },
-  onUpdate: () => {
-    console.log("blue更新中");
-  },
-});
+  // 第一次动画，橙/蓝颜色切换
+  // 蓝色手机覆盖橙色手机，触发实际，.umx-blue  进入 viewport
+  tl.to(umxBlue.value, {
+    height: "100%",
+    ease: "expo-out",
+    scrollTrigger: {
+      trigger: umxBlue.value,
+      scrub: true,
+      // markers: true,
+    },
+    onStart: () => {
+      console.log("动画开始blue_text");
+    },
+  });
+  tl.to(".blue-bg", {
+    height: "100%",
+    ease: "expo-out",
+    scrollTrigger: {
+      trigger: ".blue-bg",
+      scrub: true,
+      // start: "top top",
+      // end: "+600",
+      //   markers: true,
+    },
+    onStart: () => {
+      console.log("动画开始blue_bg");
+    },
+    onUpdate: () => {
+      console.log("blue更新中");
+    },
+  });
 
-// 第二次动画，黑/蓝手机切换
-// 等 blue 蓝色手机动画结束后，其 top 到达 viewport 视窗顶部时，触发下次动画
-gsap.to(".umx-black", {
-  height: "100%",
-  scrollTrigger: {
-    trigger: ".blue-bg",
-    start: "top top",
-    end: "+1200",
-    scrub: true,
-    //   markers: true,
-  },
-  onStart: () => {
-    console.log("动画开始 black_text");
-  },
-});
-gsap.to(".black-bg", {
-  height: "100%",
-  scrollTrigger: {
-    trigger: ".blue-bg",
-    start: "top top",
-    end: "+1200",
-    scrub: true,
-    //   markers: true,
-  },
-  onStart: () => {
-    console.log("动画开始 black_bgF");
-  },
+  // 第二次动画，黑/蓝手机切换
+  // 等 blue 蓝色手机动画结束后，其 top 到达 viewport 视窗顶部时，触发下次动画
+  tl.to(".umx-black", {
+    height: "100%",
+    scrollTrigger: {
+      trigger: ".blue-bg",
+      start: "top top",
+      end: "+1200",
+      scrub: true,
+      //   markers: true,
+    },
+    onStart: () => {
+      console.log("动画开始 black_text");
+    },
+  });
+  tl.to(".black-bg", {
+    height: "100%",
+    scrollTrigger: {
+      trigger: ".blue-bg",
+      start: "top top",
+      end: "+1200",
+      scrub: true,
+      //   markers: true,
+    },
+    onStart: () => {
+      console.log("动画开始 black_bgF");
+    },
+  });
+};
+
+const backTop = () => {
+  gsap.to(window, { duration: 3, scrollTo: 0, ease: "power3.out" });
+};
+
+onBeforeUnmount(() => {
+  tl.reverse()
+  backTop()
 });
 </script>
 
 <style scoped>
+.container {
+  overflow-x: hidden;
+}
 .containerX {
   position: absolute;
   width: 100%;
